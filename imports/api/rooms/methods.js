@@ -14,10 +14,15 @@ export const createOrJoin = new ValidatedMethod({
   run({ title, username }) {
     const room = Rooms.findOne({ title });
     if (room) {
-      return Rooms.update(
+      if (room.members.includes(username)) {
+        throw new Meteor.Error('rooms.createOrJoin', 'This username allready exists');
+      }
+
+      Rooms.update(
         { _id: room._id },
         { $addToSet: { members: username } }
       );
+      return room._id;
     } else {
       return Rooms.insert({
         title,

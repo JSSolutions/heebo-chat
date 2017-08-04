@@ -1,1 +1,14 @@
 /* CSS declarations go here */
+@import url('https://fonts.googleapis.com/css?family=Heebo');
+* {
+    font-family: 'Heebo', sans-serif;
+}
+
+.btn {
+    background: #4990E2 !important;
+    color: #F2F2F2 !important;
+}
+
+.login-form {
+   vertical-align: middle;
+}

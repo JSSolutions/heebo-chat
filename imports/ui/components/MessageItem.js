@@ -1,8 +1,8 @@
 import React from 'react';
 import {Col, Row} from "reactstrap";
 
-export default MessageItem = ({ message }) => (
-  <Row>
+export default MessageItem = ({ message, username }) => (
+  <Row className={message.username === username ? 'currentUser' : ''}>
     <Col sm="3">
       <h4>
         {message.username}

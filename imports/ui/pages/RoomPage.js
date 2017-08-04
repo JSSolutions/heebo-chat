@@ -100,7 +100,10 @@ class RoomPage extends Component {
         <RoomHeader roomTitle={room.title} />
 
         <Row>
-          <MessageList messages={room.messages} />
+          <MessageList
+            messages={room.messages}
+            username={this.props.username}
+          />
 
           <MemberList
             members={room.members}

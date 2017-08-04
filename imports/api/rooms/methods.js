@@ -45,10 +45,9 @@ export const leaveOrRemove = new ValidatedMethod({
       throw new Meteor.Error('rooms.leaveOrRemove', 'No rooms with such ID.');
     }
 
-    console.log(username);
-    if (room.members.length > 1) {
+    if (room.members.length > 1 || isCommon(room)) {
       return Rooms.update({ _id }, { $pull: { members: username } });
-    } else if (!isCommon(room)) {
+    } else {
       return Rooms.remove(_id);
     }
   },

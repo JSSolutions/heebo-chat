@@ -12,6 +12,6 @@ export const throwError = (error, callback) => {
   if (error) {
     Alert.error(error.reason, ALERT_CONFIG);
   } else {
-    callback && callback();
+    typeof callback === 'function' && callback();
   }
 };

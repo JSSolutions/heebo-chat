@@ -6,9 +6,9 @@
 
 .btn {
     background: #4990E2 !important;
-    color: #F2F2F2 !important;
+    color: #FFFFFF !important;
 }
 
-.login-form {
-   vertical-align: middle;
+.currentUser {
+    background: #F2F2F2;
 }

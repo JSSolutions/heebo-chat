@@ -45,6 +45,7 @@ export const leaveOrRemove = new ValidatedMethod({
       throw new Meteor.Error('rooms.leaveOrRemove', 'No rooms with such ID.');
     }
 
+    console.log(username);
     if (room.members.length > 1) {
       return Rooms.update({ _id }, { $pull: { members: username } });
     } else if (!isCommon(room)) {
@@ -57,14 +58,17 @@ export const addMessage = new ValidatedMethod({
   name: 'rooms.addMessage',
   validate: new SimpleSchema({
     _id: roomSchema.schema('_id'),
-    message: roomSchema.schema('messages.$'),
+    body: roomSchema.schema('messages.$.body'),
+    username: roomSchema.schema('messages.$.username'),
   }).validator(),
-  run({ _id, message }) {
+  run({ _id, username, body }) {
     const room = Rooms.findOne(_id);
     if (!room) {
       throw new Meteor.Error('rooms.addMessage', 'No rooms with such ID.');
     }
 
-    return Rooms.update({ _id }, { $addToSet: { messages: message } });
+    const messages = { username, body };
+
+    return Rooms.update({ _id }, { $addToSet: { messages } });
   },
 });

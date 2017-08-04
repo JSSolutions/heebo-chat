@@ -1,4 +1,5 @@
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { Random } from 'meteor/random';
 
 export const roomSchema = new SimpleSchema({
   _id: {
@@ -7,7 +8,7 @@ export const roomSchema = new SimpleSchema({
   },
   title: {
     type: String,
-    min: 5,
+    min: 1,
     max: 30,
   },
   members: {
@@ -15,16 +16,23 @@ export const roomSchema = new SimpleSchema({
   },
   'members.$': {
     type: String,
-    min: 2,
+    min: 1,
     max: 30,
   },
   messages: {
     type: [Object],
   },
+
+  'messages.$._id': {
+    type: String,
+    autoValue() {
+      return Random.id();
+    },
+  },
   'messages.$.username': {
     type: String,
     defaultValue: 'no-name',
-    min: 2,
+    min: 1,
     max: 30,
   },
   'messages.$.body': {
@@ -34,7 +42,9 @@ export const roomSchema = new SimpleSchema({
   },
   'messages.$.createdAt': {
     type: Date,
-    defaultValue: new Date(),
+    autoValue(){
+      return new Date();
+    },
     optional: true,
   }
 });

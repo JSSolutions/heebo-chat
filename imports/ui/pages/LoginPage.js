@@ -11,43 +11,47 @@ export default class LoginPage extends Component {
 
     this.onLogin = this.onLogin.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.state = { username: '' };
   }
 
   onLogin(e) {
     e.preventDefault();
-    const { username } = this.state;
+    const { username } = this.props;
     username && createOrJoin.call(
       {
         username,
         title: COMMON_ROOM_TITLE,
       },
-      (e , roomId) => throwError(e, () => roomId && this.props.router.push(`/room/${roomId}`))
+      (err , roomId) => throwError(err, () => {
+        if (roomId) {
+          this.props.router.push(`/room/${roomId}`);
+        }
+      })
     );
   }
 
   onChange({ target }) {
-    this.setState({ username: target.value });
+    this.props.handleUsername(target.value);
   }
 
   render() {
     return (
-      <Row className="login-form">
+      <Row>
         <Col sm={{ size: 6,  offset: 3 }}>
           <Card block>
             <Row>
               <Col>
-                <CardTitle className="justify-content-center">HEEBO.CHAT</CardTitle>
+                <CardTitle>HEEBO.CHAT</CardTitle>
               </Col>
             </Row>
             <Form onSubmit={this.onLogin}>
               <Input
+                placeholder="Username"
                 onChange={this.onChange}
-                value={this.state.username}
+                value={this.props.username}
               />
 
               <Button
-                disabled={!this.state.username.length}
+                disabled={!this.props.username.length}
                 className="form-control"
               >Chat now!</Button>
             </Form>

@@ -7,7 +7,6 @@ export const roomSchema = new SimpleSchema({
   },
   title: {
     type: String,
-    defaultValue: 'Default room',
     min: 5,
     max: 30,
   },
@@ -19,4 +18,23 @@ export const roomSchema = new SimpleSchema({
     min: 2,
     max: 30,
   },
+  messages: {
+    type: [Object],
+  },
+  'messages.$.username': {
+    type: String,
+    defaultValue: 'no-name',
+    min: 2,
+    max: 30,
+  },
+  'messages.$.body': {
+    type: String,
+    min: 1,
+    max: 255,
+  },
+  'messages.$.createdAt': {
+    type: Date,
+    defaultValue: new Date(),
+    optional: true,
+  }
 });

@@ -11,3 +11,5 @@ Rooms.deny({
 });
 
 Rooms.attachSchema(roomSchema);
+
+export const COMMON_ROOM_TITLE = 'COMMON ROOM';
